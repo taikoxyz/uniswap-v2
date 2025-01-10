@@ -1,66 +1,16 @@
-## Foundry
+# UniswapV2 contracts and deployments
+UniswapV2 contracts
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+This is needed for Gwyneth testing.
+Currently available repository: https://github.com/taikoxyz/uniswap-v2-deploy was good till today, but it is lacking smart contracts (deploys from bytecode) and thus smart contract verification is not possible.
 
 ## Usage
+After prereuqisites (such as nodes are up and running) install uniswap and tokens accordingly.
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
+### Example
+(If L1 or other network is running on localhost 32002)
 
 ```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+$ forge script script/UniswapDeployer.s.sol --rpc-url http://localhost:32002 --broadcast --legacy
+$ forge script script/DeployTokens.s.sol --rpc-url http://localhost:32002 --broadcast --legacy
 ```
