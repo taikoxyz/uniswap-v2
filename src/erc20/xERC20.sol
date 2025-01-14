@@ -151,4 +151,19 @@ contract xERC20 is IERC20, GwynethContract {
         emit Transfer(from, to, value);
         return true;
     }
+
+    function xTransferFrom(address from, uint256 chain, address to, uint256 value) public returns (bool) {
+        require(balanceOf[from] >= value, "Insufficient balance");
+        if (from != msg.sender) {
+            require(_allowances[from][msg.sender] >= value, "Allowance exceeded");
+            _allowances[from][msg.sender] -= value;
+        }
+        balanceOf[from] -= value;
+
+        EVM.xCallOptions(chain);
+        this._mint(to, value);
+
+        emit Transfer(from, to, value);
+        return true;
+    }
 }
