@@ -6,7 +6,7 @@
 	url = https://github.com/Uniswap/v2-core
 [submodule "lib/v2-periphery"]
 	path = lib/v2-periphery
-	url = https://github.com/Uniswap/v2-periphery
+	url = https://github.com/adaki2004/v2-periphery.git
 [submodule "lib/solidity-lib"]
 	path = lib/solidity-lib
 	url = https://github.com/Uniswap/solidity-lib
