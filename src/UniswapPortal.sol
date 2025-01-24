@@ -15,6 +15,17 @@ contract UniswapPortal {
         parentChainId = _parentChainId;
     }
 
+    function approveToken(
+        address token,
+        address spender,
+        uint256 amount
+    ) external returns (bool) {
+        // Call the approve function on the specified token
+        bool success = xERC20(token).approve(spender, amount);
+        require(success, "Approval failed");
+        return success;
+    }
+
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
@@ -32,7 +43,7 @@ contract UniswapPortal {
             amountIn,
             amountOutMin,
             path,
-            to,
+            address(this),
             deadline
         );
 
