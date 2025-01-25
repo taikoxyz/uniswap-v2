@@ -1,21 +1,29 @@
 pragma solidity ^0.8.20;
 
-import "./IUniswapV2Router01.sol";
+import "./IUniswapV2Router02.sol";
 import "./erc20/xERC20.sol";
 
 contract UniswapPortal {
-    IUniswapV2Router01 public uniswapRouter;
+    IUniswapV2Router02 public uniswapRouter;
     uint64 public parentChainId;
-    address public pool;
 
     constructor(
-        IUniswapV2Router01 _uniswapRouter,
-        uint64 _parentChainId,
-        address _pool
+        IUniswapV2Router02 _uniswapRouter,
+        uint64 _parentChainId
     ) {
         uniswapRouter = _uniswapRouter;
         parentChainId = _parentChainId;
-        pool = _pool;
+    }
+
+    function approveToken(
+        address token,
+        address spender,
+        uint256 amount
+    ) external returns (bool) {
+        // Call the approve function on the specified token
+        bool success = xERC20(token).approve(spender, amount);
+        require(success, "Approval failed");
+        return success;
     }
 
     function swapExactTokensForTokens(
@@ -35,7 +43,7 @@ contract UniswapPortal {
             amountIn,
             amountOutMin,
             path,
-            to,
+            address(this),
             deadline
         );
 
