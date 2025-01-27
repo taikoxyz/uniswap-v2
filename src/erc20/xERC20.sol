@@ -126,14 +126,14 @@ contract xERC20 is IERC20, GwynethContract {
         return true;
     }
 
-    function _approve(address owner, address spender, uint256 value) public returns (uint256) {
+    function _approve(address owner, address spender, uint256 value) public returns (bool) {
         require(msg.sender == address(this), "Only contract itself can call this function");
         _allowances[owner][spender] = value;
         emit Approval(owner, spender, value);
-        return value;
+        return true;
     }
 
-    function xApprove(uint256 chain, address spender, uint256 value) public returns (uint256) {
+    function xApprove(uint256 chain, address spender, uint256 value) public returns (bool) {
         EVM.xCallOptions(chain);
         return this._approve(msg.sender, spender, value);
     }

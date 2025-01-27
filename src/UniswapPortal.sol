@@ -15,14 +15,30 @@ contract UniswapPortal {
         parentChainId = _parentChainId;
     }
 
+    // For testing
     function approveToken(
+        uint256 chain,
         address token,
         address spender,
         uint256 amount
     ) external returns (bool) {
         // Call the approve function on the specified token
-        bool success = xERC20(token).approve(spender, amount);
+        bool success = xERC20(token).xApprove(chain, spender, amount);
         require(success, "Approval failed");
+        return success;
+    }
+
+    // For testing
+    function xTransferToken(
+        address token,
+        uint256 fromChain,
+        uint256 toChain,
+        address to,
+        uint256 amount
+    ) external returns (bool) {
+        // Call the approve function on the specified token
+        bool success = xERC20(token).xTransfer(fromChain, toChain, to, amount) > 0;
+        require(success, "Transfer failed");
         return success;
     }
 
@@ -39,6 +55,30 @@ contract UniswapPortal {
 
         // Do the swap on L1 like normal
         EVM.xCallOptions(parentChainId);
+        amounts = this._swapExactTokensForTokens(
+            amountIn,
+            amountOutMin,
+            path,
+            to,
+            deadline,
+            block.chainid
+        );
+    }
+
+    function _swapExactTokensForTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline,
+        uint toChainId
+    ) external returns (uint[] memory amounts) {
+        require(msg.sender == address(this), "only self calls allowed");
+
+        // Approve the tokenFrom done inside the uniswapRouter
+        xERC20(path[0]).approve(address(uniswapRouter), amountIn);
+
+        // Do the swap on L1 like normal
         amounts = uniswapRouter.swapExactTokensForTokens(
             amountIn,
             amountOutMin,
@@ -48,6 +88,6 @@ contract UniswapPortal {
         );
 
         // Get the tokens from L1 back to the user's L2 account
-        xERC20(path[1]).xTransfer(parentChainId, block.chainid, msg.sender, amounts[1]);
+        xERC20(path[1]).xTransfer(toChainId, to, amounts[1]);
     }
 }
