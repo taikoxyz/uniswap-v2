@@ -28,6 +28,7 @@ contract xERC20 is IERC20, GwynethContract {
         _symbol = symbol_;
         _totalSupply = totalSupply_;
         balanceOf[msg.sender] = totalSupply_;
+        emit Transfer(address(0x0), msg.sender, totalSupply_);
     }
 
     /**
@@ -93,11 +94,14 @@ contract xERC20 is IERC20, GwynethContract {
 
     function _mint(address to, uint256 value) public returns (uint256) {
         require(msg.sender == address(this), "Only this contract can mint");
+        emit Transfer(address(0x0),to, value);
         balanceOf[to] += value;
         return value;
     }
 
     function xTransfer(uint256 fromChain, uint256 toChain, address to, uint256 value) public returns (uint256) {
+        //Need to deduct on the "from" chain.
+        emit Transfer(msg.sender,address(0x0), value);
         EVM.xCallOptions(fromChain);
         return this._xTransfer(msg.sender, toChain, to, value);
     }
@@ -159,7 +163,8 @@ contract xERC20 is IERC20, GwynethContract {
             _allowances[from][msg.sender] -= value;
         }
         balanceOf[from] -= value;
-
+        // Neeed to deduct on the source chain.
+        emit Transfer(msg.sender,address(0x0), value);
         EVM.xCallOptions(chain);
         this._mint(to, value);
 

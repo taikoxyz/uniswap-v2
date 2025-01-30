@@ -17,13 +17,13 @@ contract DeployTokens is Script {
     }
 
     function run() public broadcast {
-        address taikoAddress = address(new xERC20("Taiko", "TAIKO", 1_000_000_000 ether));
+        address taikoAddress = address(new xERC20("Taiko", "TAIKO", 5_000 ether));
         console2.log("Deployed Taiko token:", taikoAddress);
 
-        address slothAddress = address(new xERC20("Sloth", "SLOTH", 10_000_000_000 ether));
+        address slothAddress = address(new xERC20("Sloth", "SLOTH", 7_500 ether));
         console2.log("Deployed Sloth token:", slothAddress);
 
-        address cheeseAddress = address(new xERC20("Cheese", "CHEESE", 350_000_000 ether));
+        address cheeseAddress = address(new xERC20("Cheese", "CHEESE", 9_000 ether));
         console2.log("Deployed Cheese token:", cheeseAddress);
     }
 }

@@ -4,7 +4,7 @@ pragma solidity >=0.6.6;
 import {Script} from "../lib/forge-std/src/Script.sol";
 import "forge-std/console2.sol";
 // import "../src/erc20/xERC20.sol";
-import "multicall/multicall.sol";
+import "multicall/Multicall.sol";
 
 import {UniswapV2Router02} from "@uniswap/v2-periphery/contracts/UniswapV2Router02.sol";
 import {UniswapV2Router01} from "@uniswap/v2-periphery/contracts/UniswapV2Router01.sol";
