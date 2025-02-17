@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.19;
 
 /// @title GwynethData
 /// @notice This library defines various data structures used in the Gwyneth
