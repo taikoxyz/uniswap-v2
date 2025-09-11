@@ -7,11 +7,11 @@ import "../src/erc20/xERC20.sol";
 
 contract DeployTokens is Script {
 
-    address public constant DEPLOYER_ADDRESS = 0x614561D2d143621E126e87831AEF287678B442b8;
-    uint256 public constant DEPLOYER_PK = 0x53321db7c1e331d93a11a41d16f004d7ff63972ec8ec7c25db329728ceeb1710;
+    address public constant DEPLOYER_ADDRESS = 0x394Fb4f9fA0F8981E648B2Dd11c973561898C7db;
 
     modifier broadcast() {
-        vm.startBroadcast(DEPLOYER_PK);
+        uint256 deployerPK = vm.envUint("DEPLOYER_PK");
+        vm.startBroadcast(deployerPK);
         _;
         vm.stopBroadcast();
     }

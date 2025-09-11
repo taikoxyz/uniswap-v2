@@ -7,17 +7,18 @@ import "../src/UniswapPortal.sol";
 
 contract DeployPortal is Script {
 
-    address public constant DEPLOYER_ADDRESS = 0x614561D2d143621E126e87831AEF287678B442b8;
-    uint256 public constant DEPLOYER_PK = 0x53321db7c1e331d93a11a41d16f004d7ff63972ec8ec7c25db329728ceeb1710;
+    address public constant DEPLOYER_ADDRESS = 0x394Fb4f9fA0F8981E648B2Dd11c973561898C7db;
 
     modifier broadcast() {
-        vm.startBroadcast(DEPLOYER_PK);
+        uint256 deployerPK = vm.envUint("DEPLOYER_PK");
+        vm.startBroadcast(deployerPK);
         _;
         vm.stopBroadcast();
     }
 
     function run() public broadcast {
-        address uniswapPortal = address(new UniswapPortal(IUniswapV2Router02(0x7150a78fcE4dfa444597913Be969f7fd56CbcF41), 160010));
+        // Todo: Change the parent chain ID as needed
+        address uniswapPortal = address(new UniswapPortal(IUniswapV2Router02(0x81AD261779F07B5F5F8914A3C5Ea929Cec9c168c), 160010));
         console2.log("Deployed UniswapPortal token:", uniswapPortal);
     }
 }

@@ -4,6 +4,9 @@ import "./IUniswapV2Router02.sol";
 import "./erc20/xERC20.sol";
 
 contract UniswapPortal {
+    using EVM for address;
+    using EVM for address payable;
+    
     IUniswapV2Router02 public uniswapRouter;
     uint64 public parentChainId;
 
@@ -37,7 +40,7 @@ contract UniswapPortal {
         uint256 amount
     ) external returns (bool) {
         // Call the approve function on the specified token
-        bool success = xERC20(token).xTransfer(fromChain, toChain, to, amount) > 0;
+        bool success = xERC20(token).xTransfer(fromChain, toChain, to, amount);
         require(success, "Transfer failed");
         return success;
     }
@@ -54,8 +57,7 @@ contract UniswapPortal {
         xERC20(path[0]).xTransferFrom(msg.sender, parentChainId, address(this), amountIn);
 
         // Do the swap on L1 like normal
-        EVM.xCallOptions(parentChainId);
-        amounts = this._swapExactTokensForTokens(
+        amounts = UniswapPortal(address(this).onChain(parentChainId))._swapExactTokensForTokens(
             amountIn,
             amountOutMin,
             path,
