@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./EVM.sol";
 import "../gwyneth/GwynethContract.sol";
 
-contract BaseXERC20 is ERC20, GwynethContract {
+contract CoreXERC20 is ERC20, GwynethContract {
     mapping(address to => mapping(uint256 chainid => uint256[] values)) public asyncTransfers;
 
     using EVM for address;
@@ -13,11 +13,11 @@ contract BaseXERC20 is ERC20, GwynethContract {
 
     constructor(string memory name_, string memory symbol_) ERC20(name_, symbol_) {}
 
-    function ChainAddress(uint256 chainId, BaseXERC20 contractAddr) internal view returns (BaseXERC20) {
-        return BaseXERC20(address(contractAddr).onChain(chainId));
+    function ChainAddress(uint256 chainId, CoreXERC20 contractAddr) internal view returns (CoreXERC20) {
+        return CoreXERC20(address(contractAddr).onChain(chainId));
     }
 
-    function on(uint256 chainId) internal view returns (BaseXERC20) {
+    function on(uint256 chainId) internal view returns (CoreXERC20) {
         return ChainAddress(chainId, this);
     }
 

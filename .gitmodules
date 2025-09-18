@@ -1,12 +1,6 @@
 [submodule "lib/forge-std"]
 	path = lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
-[submodule "lib/v2-core"]
-	path = lib/v2-core
-	url = https://github.com/taikoxyz/v2-core
-[submodule "lib/v2-periphery"]
-	path = lib/v2-periphery
-	url = https://github.com/taikoxyz/v2-periphery
 [submodule "lib/solidity-lib"]
 	path = lib/solidity-lib
 	url = https://github.com/Uniswap/solidity-lib
@@ -22,3 +16,9 @@
 [submodule "lib/multicall"]
 	path = lib/multicall
 	url = https://github.com/makerdao/multicall
+[submodule "lib/v2-core"]
+	path = lib/v2-core
+	url = https://github.com/taikoxyz/v2-core
+[submodule "lib/v2-periphery"]
+	path = lib/v2-periphery
+	url = https://github.com/taikoxyz/v2-periphery
