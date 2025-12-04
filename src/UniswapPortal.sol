@@ -7,8 +7,9 @@ contract UniswapPortal {
     using EVM for address;
     using EVM for address payable;
     
-    IUniswapV2Router02 public uniswapRouter;
-    uint64 public parentChainId;
+    // Made immutable - will be stored in contract code
+    IUniswapV2Router02 public immutable uniswapRouter;
+    uint64 public immutable parentChainId;
 
     constructor(
         IUniswapV2Router02 _uniswapRouter,
