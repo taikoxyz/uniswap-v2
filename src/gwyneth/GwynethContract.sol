@@ -2,13 +2,17 @@
 pragma solidity ^0.8.19;
 
 contract GwynethContract {
-    address payable private constant gwyneth = payable(0x9fCF7D13d10dEdF17d0f24C62f0cf4ED462f65b7);
+    address payable private constant extensionOracle =
+        payable(0x1ADB9959EB142bE128E6dfEcc8D571f07cd66DeE);
 
     function gwynethForwarder()
         external
         payable
     {
-        require(msg.sender == gwyneth, "GwynethContract: gwynethForwarder called not from gwyneth");
+        require(
+            msg.sender == extensionOracle,
+            "GwynethContract: gwynethForwarder called not from extension oracle"
+        );
         assembly {
             let cds := calldatasize()
             let len := sub(cds, 36)        // strip 4 (selector) + 32 (address)
