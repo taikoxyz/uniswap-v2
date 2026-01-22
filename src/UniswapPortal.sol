@@ -2,8 +2,9 @@ pragma solidity ^0.8.20;
 
 import "./IUniswapV2Router02.sol";
 import "./erc20/xERC20.sol";
+import "./gwyneth/GwynethContract.sol";
 
-contract UniswapPortal {
+contract UniswapPortal is GwynethContract {
     using EVM for address;
     using EVM for address payable;
     
